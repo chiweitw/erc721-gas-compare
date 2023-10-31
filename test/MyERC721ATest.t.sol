@@ -21,6 +21,12 @@ contract MyERC721ATest is Test {
         assertEq(token.balanceOf(user1), 1);
     }
 
+    function testMint10() public {
+        token.mint(user1, 10);
+
+        assertEq(token.balanceOf(user1), 10);
+    }
+
     function testTransfrom() public {
         vm.startPrank(user1);
         token.mint(user1, 1);
@@ -28,6 +34,17 @@ contract MyERC721ATest is Test {
         vm.stopPrank();
 
         assertEq(token.balanceOf(user2), 1);
+    }
+
+    function testTransferFrom10() public {
+        vm.startPrank(user1);
+        token.mint(user1, 10);
+        for(uint256 i=0; i<10; i++) {
+            token.safeTransferFrom(user1, user2, i);
+        }
+        vm.stopPrank();
+
+        assertEq(token.balanceOf(user2), 10);
     }
 
     function testApprove() public {

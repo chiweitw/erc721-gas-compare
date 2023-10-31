@@ -21,13 +21,34 @@ contract MyERC721EnumerableTest is Test {
         assertEq(token.balanceOf(user1), 1);
     }
 
+    function testMint10() public {
+        for(uint256 i=0; i<10; i++) {
+            token.mint(user1, i);
+        }
+        assertEq(token.balanceOf(user1), 10);
+    }
+
+
     function testTransferFrom() public {
         vm.startPrank(user1);
-        token.mint(user1, 1);
-        token.safeTransferFrom(user1, user2, 1);
+        token.mint(user1, 0);
+        token.safeTransferFrom(user1, user2, 0);
         vm.stopPrank();
 
         assertEq(token.balanceOf(user2), 1);
+    }
+
+    function testTransferFrom10() public {
+        vm.startPrank(user1);
+        for(uint256 i=0; i<10; i++) {
+            token.mint(user1, i);
+        }
+        for(uint256 i=0; i<10; i++) {
+            token.safeTransferFrom(user1, user2, i);
+        }
+        vm.stopPrank();
+
+        assertEq(token.balanceOf(user2), 10);
     }
 
     function testApprove() public {
