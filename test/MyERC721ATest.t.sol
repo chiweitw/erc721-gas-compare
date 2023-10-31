@@ -2,15 +2,15 @@
 pragma solidity ^0.8.13;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {ERC721A} from "../src/ERC721A.sol";
+import {MyERC721A} from "../src/MyERC721A.sol";
 
-contract ERC721ATest is Test {
-    ERC721A token;
+contract MyERC721ATest is Test {
+    MyERC721A token;
     address user1;
     address user2;
 
     function setUp() public {
-        token = new ERC721A("Test", "TST");
+        token = new MyERC721A("Test", "TST");
         user1 = makeAddr("Alice");
         user2 = makeAddr("Bob");
     }
