@@ -1,17 +1,6 @@
-## Foundry
+## ERC721 Gas Compare
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+Compare the gas cost of ERC721A and ERC721 Enumerable.
 
 ## Usage
 
@@ -27,40 +16,15 @@ $ forge build
 $ forge test
 ```
 
-### Format
+## Experiment
 
-```shell
-$ forge fmt
-```
+### Scenarios
 
-### Gas Snapshots
+Simulate mint/batch mint and then transfer/approve single token, and consider different token order in a batch. 
 
-```shell
-$ forge snapshot
-```
+- Single mint and then transfer single token
+- Batch mint and then transfer first/middle/last token in batch
+- Single mint and then approve single token
+- Batch mint and then transfer first/middle/last token in batch
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Results
