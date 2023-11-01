@@ -21,46 +21,95 @@ contract MyERC721EnumerableTest is Test {
         assertEq(token.balanceOf(user1), 1);
     }
 
-    function testMint10() public {
-        for(uint256 i=0; i<10; i++) {
+    function testMint5() public {
+        for(uint256 i=0; i<5; i++) {
             token.mint(user1, i);
         }
-        assertEq(token.balanceOf(user1), 10);
+        assertEq(token.balanceOf(user1), 5);
     }
 
 
-    function testTransferFrom() public {
+    function testMint1TransferFrom1() public {
         vm.startPrank(user1);
         token.mint(user1, 0);
         token.safeTransferFrom(user1, user2, 0);
         vm.stopPrank();
 
-        assertEq(token.balanceOf(user2), 1);
+        assertEq(token.ownerOf(0), user2);
     }
 
-    function testTransferFrom10() public {
+    function testMint5TransferFrom1() public {
         vm.startPrank(user1);
-        for(uint256 i=0; i<10; i++) {
+        for(uint256 i=0; i<5; i++) {
             token.mint(user1, i);
         }
-        for(uint256 i=0; i<10; i++) {
-            token.safeTransferFrom(user1, user2, i);
-        }
+        token.safeTransferFrom(user1, user2, 0);
         vm.stopPrank();
 
-        assertEq(token.balanceOf(user2), 10);
+        assertEq(token.ownerOf(0), user2);
     }
 
-    function testApprove() public {
+    function testMint5TransferFrom3() public {
         vm.startPrank(user1);
-        token.mint(user1, 1);
-        token.approve(user2, 1);
+        for(uint256 i=0; i<5; i++) {
+            token.mint(user1, i);
+        }
+        token.safeTransferFrom(user1, user2, 2);
         vm.stopPrank();
 
-        vm.startPrank(user2);
-        token.safeTransferFrom(user1, user2, 1);
+        assertEq(token.ownerOf(2), user2);
+    }
+
+    function testMint5TransferFrom5() public {
+        vm.startPrank(user1);
+        for(uint256 i=0; i<5; i++) {
+            token.mint(user1, i);
+        }
+        token.safeTransferFrom(user1, user2, 4);
         vm.stopPrank();
 
-        assertEq(token.balanceOf(user2), 1);
+        assertEq(token.ownerOf(4), user2);
+    }
+
+    function testMint1Approve1() public {
+        vm.startPrank(user1);
+        token.mint(user1, 0);
+        token.approve(user2, 0);
+        vm.stopPrank();
+
+        assertEq(token.getApproved(0), user2);
+    }
+
+    function testMint5Approve1() public {
+        vm.startPrank(user1);
+        for(uint256 i=0; i<5; i++) {
+            token.mint(user1, i);
+        }
+        token.approve(user2, 0);
+        vm.stopPrank();
+
+        assertEq(token.getApproved(0), user2);
+    }
+
+    function testMint5Approve3() public {
+        vm.startPrank(user1);
+        for(uint256 i=0; i<5; i++) {
+            token.mint(user1, i);
+        }
+        token.approve(user2, 2);
+        vm.stopPrank();
+
+        assertEq(token.getApproved(2), user2);
+    }
+
+    function testMint5Approve5() public {
+        vm.startPrank(user1);
+        for(uint256 i=0; i<5; i++) {
+            token.mint(user1, i);
+        }
+        token.approve(user2, 4);
+        vm.stopPrank();
+
+        assertEq(token.getApproved(4), user2);
     }
 }
